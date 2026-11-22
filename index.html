@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영어 학습 앱</title>
+  <title>영어 학습 앱 (발음 기록·구문 분석 강화판)</title>
   <style>
     :root {
       --primary: #2563eb;
@@ -12,11 +12,13 @@
       --green-hover: #047857;
       --red: #dc2626;
       --amber: #d97706;
+      --purple: #7c3aed;
+      --teal: #0d9488;
       --gray: #4b5563;
-      --bg: #f3f4f6;
+      --bg: #f1f5f9;
       --card: #ffffff;
-      --border: #e5e7eb;
-      --text: #111827;
+      --border: #cbd5e1;
+      --text: #0f172a;
     }
 
     * { box-sizing: border-box; }
@@ -25,13 +27,14 @@
       font-family: 'Malgun Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.65;
+      font-size: 16px;
     }
 
     header {
-      background: #1e293b;
+      background: #0f172a;
       color: #fff;
-      padding: 14px 24px;
+      padding: 16px 24px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -40,7 +43,7 @@
     }
     header h1 {
       margin: 0;
-      font-size: 20px;
+      font-size: 22px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -56,26 +59,26 @@
       font-family: inherit;
     }
     header select {
-      padding: 8px 10px;
+      padding: 9px 12px;
       border-radius: 8px;
       border: 1px solid #475569;
-      background: #334155;
+      background: #1e293b;
       color: #fff;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
     }
 
     .container {
-      max-width: 1360px;
+      max-width: 1440px;
       margin: 22px auto;
       padding: 0 20px;
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.25fr 1fr;
       gap: 24px;
       align-items: start;
     }
-    @media (max-width: 980px) {
+    @media (max-width: 1024px) {
       .container { grid-template-columns: 1fr; }
     }
 
@@ -84,15 +87,15 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 22px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       margin-bottom: 20px;
     }
 
     .section-title {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 800;
       margin: 0 0 14px 0;
-      color: #1f2937;
+      color: #0f172a;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -105,11 +108,11 @@
       gap: 6px;
     }
     .tab-btn {
-      padding: 6px 12px;
+      padding: 7px 12px;
       font-size: 13px;
       border-radius: 8px;
-      background: #e5e7eb;
-      color: #374151;
+      background: #e2e8f0;
+      color: #334155;
       font-weight: 700;
     }
     .tab-btn.active {
@@ -124,13 +127,65 @@
     }
     .stat-box {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       border-radius: 10px;
       padding: 12px;
       text-align: center;
     }
-    .stat-label { font-size: 12px; color: #64748b; font-weight: 700; }
-    .stat-value { font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px; }
+    .stat-label { font-size: 13px; color: #475569; font-weight: 700; }
+    .stat-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 4px; }
+
+    .chart-wrap {
+      margin-top: 14px;
+      padding: 14px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+    }
+    .chart-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .bar-chart {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      align-items: end;
+      height: 110px;
+      padding-top: 16px;
+      border-bottom: 1px solid #94a3b8;
+    }
+    .bar-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .bar-val {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e40af;
+      margin-bottom: 3px;
+    }
+    .bar-fill {
+      width: 100%;
+      max-width: 34px;
+      background: #2563eb;
+      border-radius: 6px 6px 0 0;
+      min-height: 4px;
+      transition: height 0.25s ease;
+    }
+    .bar-label {
+      font-size: 12px;
+      color: #334155;
+      margin-top: 6px;
+      font-weight: 700;
+    }
 
     .voice-bar {
       display: flex;
@@ -138,56 +193,56 @@
       gap: 10px;
       align-items: center;
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      padding: 12px 14px;
       border-radius: 10px;
       margin-bottom: 14px;
-      font-size: 13px;
+      font-size: 14px;
     }
     .voice-bar label {
       font-weight: 700;
-      color: #334155;
+      color: #1e293b;
       display: flex;
       align-items: center;
       gap: 6px;
     }
     .voice-bar select {
-      padding: 6px 10px;
+      padding: 7px 10px;
       border-radius: 6px;
-      border: 1px solid #cbd5e1;
+      border: 1px solid #94a3b8;
       background: #fff;
-      color: #111827;
-      font-size: 13px;
+      color: #0f172a;
+      font-size: 14px;
       max-width: 240px;
     }
 
     .status-bar {
       background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
-      padding: 12px 16px;
+      border: 1px solid #93c5fd;
+      color: #1e3a8a;
+      padding: 13px 16px;
       border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       margin-bottom: 16px;
     }
     .status-bar.listening {
       background: #ecfdf5;
-      border-color: #6ee7b7;
+      border-color: #34d399;
       color: #065f46;
     }
     .status-bar.retry {
       background: #fef2f2;
-      border-color: #fecaca;
+      border-color: #fca5a5;
       color: #991b1b;
     }
 
     .sentence-display {
       background: #f8fafc;
-      border: 2px solid #cbd5e1;
+      border: 2px solid #94a3b8;
       border-radius: 12px;
       padding: 22px 20px;
-      min-height: 155px;
+      min-height: 165px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -197,42 +252,95 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      align-items: center;
     }
     .level-tag {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 6px;
       background: #dbeafe;
       color: #1e40af;
     }
     .master-tag {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 6px;
       background: #d1fae5;
       color: #065f46;
     }
     .english-text {
-      font-size: 25px;
-      font-weight: 700;
+      font-size: 27px;
+      font-weight: 800;
       color: #0f172a;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       word-break: keep-all;
       line-height: 1.45;
     }
     .korean-text {
-      font-size: 17px;
-      color: #475569;
+      font-size: 18px;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .reading-hidden-note {
+      font-size: 14px;
+      color: #64748b;
+      font-style: italic;
     }
 
-    .result-panel {
+    /* 문법 및 구문 분석 박스 */
+    .grammar-box {
       margin-top: 14px;
-      padding: 14px 16px;
+      padding: 15px 16px;
+      background: #f5f3ff;
+      border: 1.5px solid #c4b5fd;
       border-radius: 10px;
-      border: 1px solid #e2e8f0;
+      color: #2e1065;
+      font-size: 15px;
+      display: none;
+    }
+    .chunk-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 12px 0;
+    }
+    .chunk-pill {
+      background: #ffffff;
+      border: 1px solid #a78bfa;
+      border-radius: 8px;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chunk-en {
+      font-weight: 800;
+      color: #1e1b4b;
+      font-size: 15px;
+    }
+    .chunk-role {
+      font-size: 12px;
+      color: #6d28d9;
+      font-weight: 700;
+    }
+    .ext-translator-bar {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #c4b5fd;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* 음성 인식 결과 패널 (유지됨) */
+    .result-panel {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
       background: #ffffff;
       display: none;
     }
@@ -242,23 +350,30 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 8px;
-      font-size: 16px;
-      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 17px;
+      font-weight: 800;
     }
     .score-pass { color: var(--green); }
     .score-fail { color: var(--red); }
-    .word-compare { font-size: 18px; line-height: 1.65; margin-bottom: 6px; }
-    .word-ok { color: #059669; font-weight: 700; }
+    .word-compare { font-size: 20px; line-height: 1.7; margin-bottom: 8px; }
+    .word-ok { color: #059669; font-weight: 800; }
     .word-miss {
       color: #dc2626;
-      font-weight: 700;
+      font-weight: 800;
       text-decoration: underline wavy #dc2626;
       background: #fee2e2;
-      padding: 0 4px;
+      padding: 1px 5px;
       border-radius: 4px;
     }
-    .spoken-raw { font-size: 14px; color: #64748b; }
+    .spoken-raw {
+      font-size: 15px;
+      color: #334155;
+      background: #f1f5f9;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
 
     .btn-group {
       display: grid;
@@ -273,8 +388,8 @@
     button {
       border: none;
       border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 15px;
+      padding: 13px 14px;
+      font-size: 16px;
       font-weight: 700;
       cursor: pointer;
       color: #fff;
@@ -291,27 +406,58 @@
     .btn-green:hover { background: var(--green-hover); }
     .btn-red { background: var(--red); }
     .btn-red:hover { background: #b91c1c; }
+    .btn-purple { background: var(--purple); }
+    .btn-purple:hover { background: #6d28d9; }
+    .btn-teal { background: var(--teal); }
+    .btn-teal:hover { background: #0f766e; }
     .btn-gray { background: var(--gray); }
     .btn-gray:hover { background: #374151; }
     .btn-amber { background: var(--amber); }
     .btn-amber:hover { background: #b45309; }
-    .btn-sm { padding: 7px 11px; font-size: 13px; border-radius: 8px; }
+    .btn-sm { padding: 8px 12px; font-size: 14px; border-radius: 8px; }
 
     textarea, input[type="text"], .edit-select {
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #cbd5e1;
+      padding: 11px 13px;
+      border: 1px solid #94a3b8;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 16px;
       margin-bottom: 10px;
       background: #fff;
-      color: #111827;
+      color: #0f172a;
     }
-    textarea { height: 85px; resize: vertical; }
+    textarea { height: 90px; resize: vertical; }
+
+    /* 최근 음성 인식 기록 패널 */
+    .history-list {
+      max-height: 230px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+    .history-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .history-item:last-child { border-bottom: none; }
+    .history-item:hover { background: #eff6ff; }
+    .history-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
     .weak-practice-box {
       background: #fef2f2;
-      border: 1px solid #fecaca;
+      border: 1px solid #fca5a5;
       border-radius: 10px;
       padding: 14px;
       margin-bottom: 12px;
@@ -319,17 +465,17 @@
     .weak-word-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 7px;
       max-height: 130px;
       overflow-y: auto;
       margin-bottom: 12px;
     }
     .chip {
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      border: 1px solid #fca5a5;
+      border: 1px solid #f87171;
       background: #fff;
       color: #991b1b;
       cursor: pointer;
@@ -340,7 +486,7 @@
       border-color: #dc2626;
     }
     .chip.cleared {
-      border-color: #6ee7b7;
+      border-color: #34d399;
       color: #065f46;
       background: #ecfdf5;
     }
@@ -356,8 +502,8 @@
       border-radius: 10px;
     }
     .list-item {
-      padding: 11px 14px;
-      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -366,29 +512,29 @@
     }
     .list-item:last-child { border-bottom: none; }
     .list-item:hover { background: #f1f5f9; }
-    .list-item.active { background: #eff6ff; border-left: 4px solid var(--primary); }
+    .list-item.active { background: #eff6ff; border-left: 5px solid var(--primary); }
     .item-main { flex: 1; }
-    .item-en { font-weight: 600; font-size: 15px; color: #111827; }
-    .item-meta { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .item-en { font-weight: 700; font-size: 16px; color: #0f172a; }
+    .item-meta { font-size: 13px; color: #475569; margin-top: 3px; }
     .item-actions { display: flex; gap: 6px; }
     .edit-btn {
-      background: #e0e7ff;
-      color: #1d4ed8;
-      padding: 6px 10px;
-      font-size: 12px;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 7px 11px;
+      font-size: 13px;
       border-radius: 6px;
     }
     .del-btn {
       background: #fee2e2;
       color: #b91c1c;
-      padding: 6px 10px;
-      font-size: 12px;
+      padding: 7px 11px;
+      font-size: 13px;
       border-radius: 6px;
     }
 
     .edit-box {
       background: #fffbeb;
-      border: 1px solid #fcd34d;
+      border: 1px solid #f59e0b;
       border-radius: 10px;
       padding: 14px;
       margin-bottom: 12px;
@@ -398,7 +544,7 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.55);
+      background: rgba(15, 23, 42, 0.6);
       display: none;
       align-items: center;
       justify-content: center;
@@ -408,7 +554,7 @@
     .modal-card {
       background: #fff;
       border-radius: 14px;
-      max-width: 420px;
+      max-width: 440px;
       width: 100%;
       padding: 24px;
       text-align: center;
@@ -416,13 +562,13 @@
     .qr-box {
       margin: 16px auto;
       padding: 14px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid #cbd5e1;
       border-radius: 12px;
       display: inline-block;
     }
     .url-preview {
-      font-size: 12px;
-      color: #475569;
+      font-size: 13px;
+      color: #334155;
       background: #f1f5f9;
       padding: 8px 10px;
       border-radius: 8px;
@@ -430,9 +576,9 @@
       margin-bottom: 14px;
     }
     .shortcut-hint {
-      font-size: 13px;
-      color: #6b7280;
-      margin-top: 10px;
+      font-size: 14px;
+      color: #475569;
+      margin-top: 12px;
       text-align: center;
     }
   </style>
@@ -442,11 +588,12 @@
 <header>
   <h1>📘 영어 학습 앱</h1>
   <div class="header-actions">
-    <select id="levelSelect" onchange="changeLevel()">
-      <option value="beginner" selected>🌱 초급 모드</option>
+    <select id="levelSelect" onchange="onSettingsChange()">
+      <option value="beginner">🌱 초급 모드</option>
       <option value="intermediate">🌿 중급 모드</option>
       <option value="all">📚 전체 레벨</option>
     </select>
+    <button class="btn-amber btn-sm" id="autoNextBtn" onclick="toggleAutoNext()">⏸ 통과 후 결과 유지 중</button>
     <button class="btn-amber btn-sm" id="hideMasterBtn" onclick="toggleHideMaster()">🙈 완벽(100%) 문장 숨김 중</button>
     <button class="btn-blue btn-sm" onclick="openQrModal()">📱 웹버전 바코드</button>
     <button class="btn-green btn-sm" onclick="exportBackup()">💾 백업</button>
@@ -456,7 +603,111 @@
 </header>
 
 <div class="container">
+  <!-- 좌측 영역 -->
   <div>
+    <!-- 문장 학습 카드 -->
+    <div class="card">
+      <div class="section-title">
+        <span>1. 문장 따라 읽기 및 분석</span>
+        <span id="counterBadge" style="font-size:15px; color:#2563eb;">0 / 0</span>
+      </div>
+
+      <div class="voice-bar">
+        <label>
+          🌍 음성:
+          <select id="accentSelect" onchange="onSettingsChange()">
+            <option value="en-US">🇺🇸 미국 (US)</option>
+            <option value="en-GB">🇬🇧 영국 (GB)</option>
+          </select>
+        </label>
+        <label>
+          🗣️ 목소리:
+          <select id="voiceSelect" onchange="onSettingsChange()"></select>
+        </label>
+        <label>
+          🐢 속도:
+          <select id="rateSelect" onchange="onSettingsChange()">
+            <option value="0.75">0.75x</option>
+            <option value="0.88">0.88x</option>
+            <option value="1.0">1.0x</option>
+            <option value="1.15">1.15x</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="statusBar" class="status-bar">
+        준비되었습니다. [발음 듣기] 후 [말하기 연습]을 눌러보세요.
+      </div>
+
+      <div class="sentence-display">
+        <div class="meta-tags">
+          <span id="levelBadge" class="level-tag">🌱 초급</span>
+          <span id="masterBadge" class="master-tag" style="display:none;">⭐ 완벽 마스터 (100%)</span>
+        </div>
+        <div id="englishText" class="english-text">자료를 불러오는 중...</div>
+        <div id="koreanText" class="korean-text"></div>
+
+        <!-- 문법 및 구문 분석 박스 -->
+        <div id="grammarBox" class="grammar-box"></div>
+
+        <!-- 음성인식 결과 패널 (자동으로 사라지지 않고 보존됨) -->
+        <div id="resultPanel" class="result-panel">
+          <div class="score-header">
+            <span id="scoreText">정확도: 0%</span>
+            <span id="passBadge"></span>
+          </div>
+          <div id="wordCompare" class="word-compare"></div>
+          <div id="spokenRaw" class="spoken-raw"></div>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn-gray" onclick="prevSentence()">⏮ 되돌아가기</button>
+        <button class="btn-blue" onclick="speakSentence()">🔊 발음 듣기</button>
+        <button class="btn-green" onclick="startVoicePractice('sentence')">🎤 말하기 연습</button>
+        <button class="btn-gray" onclick="nextSentence()">⏭ 다음 문장</button>
+      </div>
+
+      <!-- 구문/문법 및 외부 번역기 도구 모음 -->
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-purple btn-sm" onclick="toggleGrammar()">📖 구문·문법 분석</button>
+        <button class="btn-teal btn-sm" onclick="translateCurrentOnline()">🌐 자동 번역 새로고침</button>
+        <button class="btn-blue btn-sm" onclick="openExternalTranslator('deepl')">📘 DeepL로 분석</button>
+        <button class="btn-gray btn-sm" onclick="openExternalTranslator('google')">🔍 Google 번역기</button>
+        <button class="btn-gray btn-sm" id="toggleMeaningBtn" onclick="toggleMeaningVisibility()">👁️ 한글 뜻 숨기기</button>
+      </div>
+
+      <div class="shortcut-hint">
+        💡 PC 단축키: <b>[←]</b> 되돌아가기 · <b>[Space]</b> 발음 듣기 · <b>[Enter]</b> 말하기 · <b>[→]</b> 다음 문장
+      </div>
+    </div>
+
+    <!-- 최근 음성 인식 기록 (지나간 인식 결과 다시 보기) -->
+    <div class="card">
+      <div class="section-title">
+        <span>📜 최근 음성인식 결과 다시 보기 (<span id="historyCount">0</span>건)</span>
+        <button class="btn-gray btn-sm" onclick="clearSpeechHistory()">기록 비우기</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </div>
+
+    <!-- 새 문장 추가 카드 -->
+    <div class="card">
+      <div class="section-title">
+        <span>2. 새 영어 문장 추가 (영구 누적)</span>
+      </div>
+      <textarea id="customInput" placeholder="영어 문장을 붙여넣으세요. (한 줄에 한 문장 또는 '영어 | 한글뜻' 형식)&#10;비워두면 온라인 자동 번역이 실행됩니다.&#10;예시: Take a deep breath. | 숨을 깊게 쉬세요."></textarea>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-blue btn-sm" onclick="addCustomMaterials()">➕ 내 저장소에 추가 (자동번역)</button>
+        <button class="btn-green btn-sm" onclick="addBeginnerPack()">🌱 초급 기본 문장 10개 추가</button>
+        <button class="btn-gray btn-sm" onclick="fetchInternetQuotes()">🌐 인터넷 명언 5개 가져오기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 우측 영역 -->
+  <div>
+    <!-- 학습 통계 + 일일 도표 -->
     <div class="card">
       <div class="section-title">
         <span>📊 학습 통계</span>
@@ -480,84 +731,23 @@
           <div class="stat-value" id="statAvg">0%</div>
         </div>
       </div>
-    </div>
 
-    <div class="card">
-      <div class="section-title">
-        <span>1. 문장 따라 읽기</span>
-        <span id="counterBadge" style="font-size:14px; color:#2563eb;">0 / 0</span>
-      </div>
-
-      <div class="voice-bar">
-        <label>
-          🗣️ 음성:
-          <select id="voiceSelect"></select>
-        </label>
-        <label>
-          🐢 속도:
-          <select id="rateSelect">
-            <option value="0.75">아주 천천히 (0.75x)</option>
-            <option value="0.88" selected>천천히 (0.88x)</option>
-            <option value="1.0">보통 (1.0x)</option>
-            <option value="1.15">빠르게 (1.15x)</option>
-          </select>
-        </label>
-      </div>
-
-      <div id="statusBar" class="status-bar">
-        준비되었습니다. [발음 듣기] 후 [말하기 연습]을 눌러보세요.
-      </div>
-
-      <div class="sentence-display">
-        <div class="meta-tags">
-          <span id="levelBadge" class="level-tag">🌱 초급</span>
-          <span id="masterBadge" class="master-tag" style="display:none;">⭐ 완벽 마스터 (100%)</span>
+      <div class="chart-wrap">
+        <div class="chart-title">
+          <span>📈 일일 단위 연습 횟수 도표 (최근 7일)</span>
+          <span id="chartMaxHint" style="color:#475569;">최대 0회</span>
         </div>
-        <div id="englishText" class="english-text">자료를 불러오는 중...</div>
-        <div id="koreanText" class="korean-text"></div>
-
-        <div id="resultPanel" class="result-panel">
-          <div class="score-header">
-            <span id="scoreText">정확도: 0%</span>
-            <span id="passBadge"></span>
-          </div>
-          <div id="wordCompare" class="word-compare"></div>
-          <div id="spokenRaw" class="spoken-raw"></div>
-        </div>
-      </div>
-
-      <div class="btn-group">
-        <button class="btn-gray" onclick="prevSentence()">⏮ 되돌아가기</button>
-        <button class="btn-blue" onclick="speakSentence()">🔊 발음 듣기</button>
-        <button class="btn-green" onclick="startVoicePractice('sentence')">🎤 말하기 연습</button>
-        <button class="btn-gray" onclick="nextSentence()">⏭ 다음 문장</button>
-      </div>
-
-      <div class="shortcut-hint">
-        💡 PC 단축키: <b>[←]</b> 되돌아가기 · <b>[Space]</b> 발음 듣기 · <b>[Enter]</b> 말하기 · <b>[→]</b> 다음 문장
+        <div id="dailyBarChart" class="bar-chart"></div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="section-title">
-        <span>2. 새 영어 문장 추가 (영구 누적)</span>
-      </div>
-      <textarea id="customInput" placeholder="영어 문장을 붙여넣으세요.&#10;예시: Take a deep breath. | 숨을 깊게 쉬세요."></textarea>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn-blue btn-sm" onclick="addCustomMaterials()">➕ 내 저장소에 추가</button>
-        <button class="btn-gray btn-sm" onclick="addBeginnerPack()">🌱 초급 기본 문장 10개 추가</button>
-        <button class="btn-gray btn-sm" onclick="fetchInternetQuotes()">🌐 인터넷 명언 5개 가져오기</button>
-      </div>
-    </div>
-  </div>
-
-  <div>
+    <!-- 발음 취약 단어 별도 연습 -->
     <div class="card">
       <div class="section-title">
         <span>🎯 발음 취약 단어 별도 연습 (<span id="weakCount">0</span>개)</span>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button class="btn-green btn-sm" onclick="clearCompletedWeakWords()">🧹 완료 단어 정리</button>
-          <button class="btn-red btn-sm" onclick="deleteSelectedWeakWord()">🗑️ 단어 삭제</button>
+          <button class="btn-green btn-sm" onclick="clearCompletedWeakWords()">🧹 완료 정리</button>
+          <button class="btn-red btn-sm" onclick="deleteSelectedWeakWord()">🗑️ 삭제</button>
         </div>
       </div>
       <div id="weakChips" class="weak-word-chips"></div>
@@ -565,9 +755,9 @@
       <div id="weakPracticeBox" class="weak-practice-box">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
           <span id="selectedWeakWord" style="font-size:22px; font-weight:800; color:#991b1b;">단어를 선택하세요</span>
-          <span id="selectedWeakStats" style="font-size:12px; color:#7f1d1d;">틀린 횟수: 0회</span>
+          <span id="selectedWeakStats" style="font-size:13px; color:#7f1d1d; font-weight:700;">틀린 횟수: 0회</span>
         </div>
-        <div id="selectedWeakMeaning" style="font-size:15px; color:#374151; margin:6px 0 8px 0;">뜻이 아직 등록되지 않았습니다.</div>
+        <div id="selectedWeakMeaning" style="font-size:15px; color:#1e293b; margin:6px 0 8px 0; font-weight:600;">뜻이 아직 등록되지 않았습니다.</div>
 
         <input type="text" id="weakMeaningInput" placeholder="이 단어의 한글 뜻/해석을 입력해 저장하세요..." style="margin-bottom:8px;" />
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -575,19 +765,20 @@
           <button class="btn-blue btn-sm" onclick="speakSelectedWeakWord()">🔊 단어 듣기</button>
           <button class="btn-green btn-sm" onclick="startVoicePractice('word')">🎤 단어 연습</button>
         </div>
-        <div id="weakFeedback" style="font-size:13px; font-weight:700; margin-top:8px; color:#1f2937;"></div>
+        <div id="weakFeedback" style="font-size:14px; font-weight:700; margin-top:8px; color:#0f172a;"></div>
       </div>
     </div>
 
+    <!-- 저장된 문장 목록 -->
     <div class="card">
       <div class="section-title">
         <span>3. 저장된 문장 목록 (전체 <span id="totalCount">0</span>개)</span>
       </div>
 
       <div id="editBox" class="edit-box">
-        <div style="font-weight:700; margin-bottom:8px; color:#92400e;">✏️ 문장 및 레벨 수정</div>
+        <div style="font-weight:700; margin-bottom:8px; color:#92400e;">✏️ 문장, 번역 및 레벨 수정</div>
         <input type="text" id="editEn" placeholder="영어 문장" />
-        <input type="text" id="editKo" placeholder="한글 뜻 (선택)" />
+        <input type="text" id="editKo" placeholder="한글 뜻 (직접 입력 시 우선 적용)" />
         <select id="editLevel" class="edit-select">
           <option value="beginner">🌱 초급</option>
           <option value="intermediate">🌿 중급</option>
@@ -604,6 +795,7 @@
   </div>
 </div>
 
+<!-- QR 모달 -->
 <div id="qrModal" class="modal-backdrop" onclick="closeQrModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
     <h3 style="margin:0 0 8px 0;">📱 스마트폰 웹버전 접속 바코드</h3>
@@ -619,23 +811,65 @@
 </div>
 
 <script>
-  const DB_KEY = 'personal_english_app_v1';
+  const DB_KEY = 'personal_english_app_v3';
+  const LEGACY_KEY = 'personal_english_app_v2';
   const PASS_THRESHOLD = 80;
 
-  let appData = JSON.parse(localStorage.getItem(DB_KEY) || 'null') || {
-    items: [],
-    weakWords: {},
-    dailyStats: {}
-  };
+  // 기존 v2 데이터가 있으면 자동 마이그레이션
+  function loadInitialData() {
+    const savedV3 = localStorage.getItem(DB_KEY);
+    if (savedV3) return JSON.parse(savedV3);
 
-  let currentLevel = 'beginner';
-  let hideMastered = true;
+    const savedV2 = localStorage.getItem(LEGACY_KEY);
+    if (savedV2) {
+      const parsed = JSON.parse(savedV2);
+      return {
+        items: parsed.items || [],
+        weakWords: parsed.weakWords || {},
+        dailyStats: parsed.dailyStats || {},
+        speechHistory: [],
+        settings: {
+          level: parsed.settings?.level || 'beginner',
+          hideMastered: parsed.settings?.hideMastered ?? false,
+          autoNext: false, // 기본값: 통과 후 결과 화면 유지
+          accent: parsed.settings?.accent || 'en-US',
+          voiceName: parsed.settings?.voiceName || '',
+          rate: parsed.settings?.rate || '0.88',
+          statsPeriod: parsed.settings?.statsPeriod || 'daily',
+          showMeaning: parsed.settings?.showMeaning ?? true
+        }
+      };
+    }
+
+    return {
+      items: [],
+      weakWords: {},
+      dailyStats: {},
+      speechHistory: [],
+      settings: {
+        level: 'beginner',
+        hideMastered: false,
+        autoNext: false,
+        accent: 'en-US',
+        voiceName: '',
+        rate: '0.88',
+        statsPeriod: 'daily',
+        showMeaning: true
+      }
+    };
+  }
+
+  let appData = loadInitialData();
+  if (!appData.speechHistory) appData.speechHistory = [];
+  if (typeof appData.settings.autoNext === 'undefined') appData.settings.autoNext = false;
+
   let currentIndex = 0;
   let selectedWeakKey = null;
-  let statsPeriod = 'daily';
   let editingId = null;
   let autoNextTimer = null;
   let practiceMode = 'sentence';
+  let isReadingActive = false;
+  let showGrammarBox = false;
   let availableVoices = [];
 
   const BEGINNER_STARTER = [
@@ -651,52 +885,262 @@
     { en: "Have a wonderful and healthy day.", ko: "멋지고 건강한 하루 보내세요.", level: "beginner" }
   ];
 
-  const COMMON_MEANINGS = {
-    "shoulder": "어깨",
-    "feels": "느껴지다",
-    "little": "조금, 작은",
-    "stiff": "뻣뻣한, 뻐근한",
-    "please": "제발, ~해 주세요",
-    "speak": "말하다",
-    "slowly": "천천히",
-    "could": "~할 수 있을까요",
-    "repeat": "반복하다, 다시 말하다",
-    "practicing": "연습하는",
-    "every": "매, 모든",
-    "thank": "감사하다",
-    "nearest": "가장 가까운",
-    "pharmacy": "약국",
-    "would": "~하고 싶습니다",
-    "glass": "잔, 유리컵",
-    "warm": "따뜻한",
-    "water": "물",
-    "schedule": "일정, 스케줄",
-    "wonderful": "멋진, 훌륭한",
-    "healthy": "건강한"
+  const WORD_DICT = {
+    "good": "좋은", "morning": "아침", "how": "어떻게", "are": "~이다", "you": "당신/너", "today": "오늘",
+    "my": "나의", "shoulder": "어깨", "feels": "느껴지다", "feel": "느끼다", "a": "하나의", "little": "조금",
+    "stiff": "뻣뻣한/뻐근한", "please": "부디/~해 주세요", "speak": "말하다", "more": "더", "slowly": "천천히",
+    "could": "~할 수 있을까요", "repeat": "반복하다", "that": "그것", "one": "하나", "time": "번/시간",
+    "i": "나는", "am": "~이다", "practicing": "연습하는 중", "practice": "연습하다", "english": "영어",
+    "every": "매/모든", "day": "날/하루", "thank": "감사하다", "very": "매우", "much": "많이",
+    "for": "~을 위해", "your": "당신의", "help": "도움/돕다", "where": "어디", "is": "~이다",
+    "nearest": "가장 가까운", "pharmacy": "약국", "would": "~하고 싶다", "like": "원하다/좋아하다",
+    "glass": "잔", "of": "~의", "warm": "따뜻한", "water": "물", "let": "~하게 하다",
+    "me": "나를/나에게", "check": "확인하다", "schedule": "일정", "first": "먼저",
+    "have": "가지다/보내다", "wonderful": "멋진", "and": "그리고", "healthy": "건강한",
+    "life": "삶/인생", "work": "일/노력", "make": "만들다", "best": "최고의", "never": "결코 ~않다",
+    "give": "주다", "up": "위로", "change": "변화/바꾸다", "start": "시작하다",
+    "learn": "배우다", "health": "건강", "important": "중요한", "simple": "단순한", "habit": "습관",
+    "small": "작은", "daily": "매일의", "results": "결과", "clear": "명확한", "speech": "말하기",
+    "patient": "인내심 있는", "calm": "차분한", "mind": "마음", "faster": "더 빠르게"
   };
+
+  // 온라인 무료 번역 API (MyMemory) 호출 + 로컬 사전 폴백
+  async function fetchOnlineTranslation(enText) {
+    const clean = enText.trim();
+    const matchedStarter = BEGINNER_STARTER.find(s => s.en.toLowerCase() === clean.toLowerCase());
+    if (matchedStarter) return matchedStarter.ko;
+
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(clean)}&langpair=en|ko`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        const translated = data?.responseData?.translatedText;
+        if (translated && translated.toLowerCase() !== clean.toLowerCase()) {
+          return translated;
+        }
+      }
+    } catch {
+      // 오프라인 또는 API 제한 시 로컬 단어 매핑으로 폴백
+    }
+    return generateLocalFallbackTranslation(clean);
+  }
+
+  function generateLocalFallbackTranslation(enText) {
+    const words = enText.toLowerCase().replace(/[^a-z\s'-]/g, '').split(/\s+/).filter(Boolean);
+    const translatedWords = words.map(w => WORD_DICT[w] || w);
+    return `${translatedWords.join(' ')} (단어 직역)`;
+  }
+
+  function resolveTranslation(enText, userKo) {
+    const trimmedKo = (userKo || '').trim();
+    if (trimmedKo.length > 0) return trimmedKo;
+    const matchedStarter = BEGINNER_STARTER.find(s => s.en.toLowerCase() === enText.trim().toLowerCase());
+    if (matchedStarter) return matchedStarter.ko;
+    return generateLocalFallbackTranslation(enText);
+  }
+
+  // 현재 문장 온라인 재번역 버튼
+  async function translateCurrentOnline() {
+    const activeList = getActiveList();
+    const cur = activeList[currentIndex];
+    if (!cur) return;
+
+    updateStatus('🌐 온라인 자동 번역을 가져오는 중입니다...');
+    const translated = await fetchOnlineTranslation(cur.en);
+    cur.ko = translated;
+    saveAll();
+    updateStatus('✅ 자동 번역이 업데이트되었습니다.');
+  }
+
+  // DeepL 또는 Google 번역기로 현재 문장 바로 열기
+  function openExternalTranslator(service) {
+    const activeList = getActiveList();
+    const cur = activeList[currentIndex];
+    if (!cur) return;
+
+    const encoded = encodeURIComponent(cur.en);
+    let url = '';
+    if (service === 'deepl') {
+      url = `https://www.deepl.com/translator#en/ko/${encoded}`;
+    } else {
+      url = `https://translate.google.com/?sl=en&tl=ko&text=${encoded}&op=translate`;
+    }
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  // 구문(청크) 분리 및 문법 분석기
+  function analyzeSentenceStructure(enText) {
+    const s = enText.trim();
+    const lower = s.toLowerCase();
+
+    // 1. 의미 단위(Chunk) 분리: 전치사, 접속사, 관계사 앞에서 끊어 읽기
+    const cleanNoEndPunct = s.replace(/[.!?]+$/, '');
+    const splitRegex = /\b(for|to|in|on|at|with|from|by|about|and|but|or|because|if|when|while|that|which|who|where)\b/gi;
+    const rawChunks = cleanNoEndPunct
+      .replace(splitRegex, '|$1')
+      .split('|')
+      .map(c => c.trim())
+      .filter(Boolean);
+
+    const chunks = rawChunks.map((chunk, idx) => {
+      const cLow = chunk.toLowerCase();
+      let role = idx === 0 ? '주절 / 핵심 표현' : '수식·연결 구문';
+      if (/^(for|to|in|on|at|with|from|by|about)\b/.test(cLow)) {
+        role = '전치사구 / to부정사구 (장소·목적·방법)';
+      } else if (/^(and|but|or|because|if|when|while)\b/.test(cLow)) {
+        role = '접속사절 (이유·조건·시간·연결)';
+      } else if (/^(that|which|who|where)\b/.test(cLow)) {
+        role = '관계사절 (앞 말 수식)';
+      }
+      return { text: chunk, role };
+    });
+
+    // 2. 문법 포인트 분석
+    const notes = [];
+    if (/^(do|does|did|can|could|would|will|are|is|am|where|what|how|why|when|who)\b/.test(lower) || s.endsWith('?')) {
+      notes.push("• **문장 유형(의문문)**: 의문사 또는 조동사/be동사가 문장 맨 앞에 위치하여 질문합니다.");
+    } else if (/^(please|let's|let|take|keep|make|start|try|have|speak|check)\b/.test(lower)) {
+      notes.push("• **문장 유형(명령·권유문)**: 주어(You)가 생략되고 동사원형으로 시작하여 요청·제안을 나타냅니다.");
+    } else {
+      notes.push("• **문장 유형(평서문)**: [주어 + 동사 + 목적어/보어]의 기본 영어 어순을 따릅니다.");
+    }
+
+    if (/\b(am|is|are)\s+[a-z]+ing\b/.test(lower)) {
+      notes.push("• **현재진행형 (be + -ing)**: 지금 진행 중인 동작이나 가까운 계획을 나타냅니다.");
+    } else if (/\b(was|were)\s+[a-z]+ing\b/.test(lower)) {
+      notes.push("• **과거진행형 (was/were + -ing)**: 과거 특정 시점에 진행 중이던 동작입니다.");
+    } else if (/\b(have|has)\s+[a-z]+(ed|en)\b/.test(lower)) {
+      notes.push("• **현재완료 (have/has + p.p.)**: 과거부터 현재까지 이어지는 경험·완료·결과를 나타냅니다.");
+    } else if (/\b(would like|could you|can you|may i)\b/.test(lower)) {
+      notes.push("• **공손한 표현**: 조동사(would, could)를 사용해 정중하게 요청하거나 의사를 밝힙니다.");
+    }
+
+    if (/\bto\s+[a-z]+\b/.test(lower)) {
+      notes.push("• **to부정사 (to + 동사원형)**: '~하는 것', '~하기 위해'의 의미로 문장을 확장합니다.");
+    }
+
+    // 3. 문장 내 주요 단어 풀이
+    const words = lower.replace(/[^a-z\s'-]/g, '').split(/\s+/).filter(Boolean);
+    const vocabList = [];
+    const seen = new Set();
+    words.forEach(w => {
+      if (!seen.has(w) && WORD_DICT[w] && w.length > 2) {
+        seen.add(w);
+        vocabList.push(`<b>${w}</b>(${WORD_DICT[w]})`);
+      }
+    });
+
+    return { chunks, notes, vocabList };
+  }
+
+  function buildGrammarHTML(enText) {
+    const { chunks, notes, vocabList } = analyzeSentenceStructure(enText);
+    const chunksHtml = chunks.map(c => `
+      <div class="chunk-pill">
+        <span class="chunk-en">${c.text}</span>
+        <span class="chunk-role">${c.role}</span>
+      </div>
+    `).join('');
+
+    const vocabHtml = vocabList.length > 0
+      ? `<div style="margin-top:8px;">• <strong>핵심 어휘</strong>: ${vocabList.join(', ')}</div>`
+      : '';
+
+    return `
+      <div style="font-weight:800; font-size:16px; margin-bottom:4px;">📖 구문 끊어 읽기 & 문법 분석</div>
+      <div class="chunk-wrap">${chunksHtml}</div>
+      <div>${notes.join('<br>')}</div>
+      ${vocabHtml}
+      <div class="ext-translator-bar">
+        <span style="font-size:13px; font-weight:700; color:#4c1d95;">더 깊은 AI 번역·뉘앙스 비교:</span>
+        <button class="btn-blue btn-sm" onclick="openExternalTranslator('deepl')">📘 DeepL 번역기에서 열기</button>
+        <button class="btn-gray btn-sm" onclick="openExternalTranslator('google')">🔍 Google 번역기에서 열기</button>
+      </div>
+    `;
+  }
 
   if (appData.items.length === 0) {
     appData.items = BEGINNER_STARTER.map((s, i) => ({
-      id: 'init_' + i + '_' + Date.now(),
+      id: 'init_' + i + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
       en: s.en,
-      ko: s.ko,
+      ko: resolveTranslation(s.en, s.ko),
       level: s.level,
       count: 0,
-      bestScore: 0
+      bestScore: 0,
+      lastResult: null
     }));
     saveAll(false);
   }
 
-  function getTodayKey() {
+  function applySettingsToUI() {
+    document.getElementById('levelSelect').value = appData.settings.level || 'beginner';
+    document.getElementById('accentSelect').value = appData.settings.accent || 'en-US';
+    document.getElementById('rateSelect').value = appData.settings.rate || '0.88';
+    document.getElementById('autoNextBtn').textContent = appData.settings.autoNext
+      ? '⏩ 통과 시 자동 넘김 중'
+      : '⏸ 통과 후 결과 유지 중';
+    document.getElementById('hideMasterBtn').textContent = appData.settings.hideMastered
+      ? '🙈 완벽(100%) 문장 숨김 중'
+      : '👀 완벽(100%) 문장 표시 중';
+    document.getElementById('toggleMeaningBtn').textContent = appData.settings.showMeaning
+      ? '👁️ 한글 뜻 숨기기'
+      : '👁️ 한글 뜻 보기';
+    switchStatsPeriod(appData.settings.statsPeriod || 'daily', false);
+  }
+
+  function onSettingsChange() {
+    appData.settings.level = document.getElementById('levelSelect').value;
+    appData.settings.accent = document.getElementById('accentSelect').value;
+    appData.settings.rate = document.getElementById('rateSelect').value;
+    const voiceSel = document.getElementById('voiceSelect');
+    if (voiceSel.value) appData.settings.voiceName = voiceSel.value;
+
+    populateVoicesByAccent();
+    currentIndex = 0;
+    saveAll();
+  }
+
+  function toggleAutoNext() {
+    clearTimeout(autoNextTimer);
+    appData.settings.autoNext = !appData.settings.autoNext;
+    applySettingsToUI();
+    saveAll(false);
+    updateStatus(appData.settings.autoNext
+      ? '⏩ 이제 80% 이상 통과 시 2초 후 다음 문장으로 자동 이동합니다.'
+      : '⏸ 이제 통과 후에도 음성인식 결과 화면이 사라지지 않고 유지됩니다.');
+  }
+
+  function toggleHideMaster() {
+    clearTimeout(autoNextTimer);
+    appData.settings.hideMastered = !appData.settings.hideMastered;
+    currentIndex = 0;
+    applySettingsToUI();
+    saveAll();
+  }
+
+  function toggleMeaningVisibility() {
+    appData.settings.showMeaning = !appData.settings.showMeaning;
+    applySettingsToUI();
+    saveAll();
+  }
+
+  function toggleGrammar() {
+    showGrammarBox = !showGrammarBox;
+    renderCurrentSentenceCard();
+  }
+
+  function getTodayKey(offsetDays = 0) {
     const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const d = String(now.getDate()).padStart(2, '0');
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offsetDays);
+    const y = target.getFullYear();
+    const m = String(target.getMonth() + 1).padStart(2, '0');
+    const d = String(target.getDate()).padStart(2, '0');
     return `${y}-${m}-${d}`;
   }
 
   function recordDailyStat(score) {
-    const key = getTodayKey();
+    const key = getTodayKey(0);
     if (!appData.dailyStats[key]) {
       appData.dailyStats[key] = { attempts: 0, passed: 0, scoreSum: 0 };
     }
@@ -705,16 +1149,18 @@
     appData.dailyStats[key].scoreSum += score;
   }
 
-  function switchStatsPeriod(period) {
-    statsPeriod = period;
+  function switchStatsPeriod(period, shouldSave = true) {
+    appData.settings.statsPeriod = period;
     document.getElementById('tabDaily').classList.toggle('active', period === 'daily');
     document.getElementById('tabWeekly').classList.toggle('active', period === 'weekly');
     document.getElementById('tabMonthly').classList.toggle('active', period === 'monthly');
     renderStats();
+    if (shouldSave) saveAll(false);
   }
 
   function renderStats() {
-    const daysLimit = statsPeriod === 'daily' ? 1 : statsPeriod === 'weekly' ? 7 : 30;
+    const period = appData.settings.statsPeriod || 'daily';
+    const daysLimit = period === 'daily' ? 1 : period === 'weekly' ? 7 : 30;
     const now = new Date();
     const cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (daysLimit - 1));
 
@@ -736,6 +1182,37 @@
     document.getElementById('statCount').textContent = `${attempts}회`;
     document.getElementById('statPass').textContent = `${passed}회`;
     document.getElementById('statAvg').textContent = `${avg}%`;
+
+    renderDailyBarChart();
+  }
+
+  function renderDailyBarChart() {
+    const chartEl = document.getElementById('dailyBarChart');
+    chartEl.innerHTML = '';
+
+    const dayKeys = [];
+    for (let i = -6; i <= 0; i++) {
+      dayKeys.push(getTodayKey(i));
+    }
+
+    const counts = dayKeys.map(k => (appData.dailyStats[k] ? appData.dailyStats[k].attempts || 0 : 0));
+    const maxVal = Math.max(1, ...counts);
+    document.getElementById('chartMaxHint').textContent = `최대 ${Math.max(0, ...counts)}회`;
+
+    dayKeys.forEach((key, idx) => {
+      const val = counts[idx];
+      const heightPct = Math.round((val / maxVal) * 100);
+      const shortLabel = key.slice(5);
+
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+      col.innerHTML = `
+        <div class="bar-val">${val}</div>
+        <div class="bar-fill" style="height:${val === 0 ? 4 : Math.max(10, heightPct)}%;"></div>
+        <div class="bar-label">${shortLabel}</div>
+      `;
+      chartEl.appendChild(col);
+    });
   }
 
   function addWeakWord(rawWord) {
@@ -744,7 +1221,7 @@
     if (!appData.weakWords[clean]) {
       appData.weakWords[clean] = {
         word: clean,
-        meaning: COMMON_MEANINGS[clean] || '',
+        meaning: WORD_DICT[clean] || '',
         missCount: 1,
         practiceCount: 0,
         cleared: false
@@ -761,33 +1238,29 @@
       updateStatus('삭제할 취약 단어를 먼저 선택해 주세요.', 'retry');
       return;
     }
-    const deletedWord = appData.weakWords[selectedWeakKey].word;
+    const deleted = appData.weakWords[selectedWeakKey].word;
     delete appData.weakWords[selectedWeakKey];
-    const remaining = Object.keys(appData.weakWords);
-    selectedWeakKey = remaining.length > 0 ? remaining[0] : null;
+    const keys = Object.keys(appData.weakWords);
+    selectedWeakKey = keys.length > 0 ? keys[0] : null;
     document.getElementById('weakFeedback').textContent = '';
     saveAll();
-    updateStatus(`🗑️ 취약 단어 "${deletedWord}"를 목록에서 삭제했습니다.`);
+    updateStatus(`🗑️ 취약 단어 "${deleted}"를 삭제했습니다.`);
   }
 
   function clearCompletedWeakWords() {
-    const completedKeys = Object.entries(appData.weakWords)
-      .filter(([, w]) => w.cleared)
-      .map(([k]) => k);
-
-    if (completedKeys.length === 0) {
+    const completed = Object.entries(appData.weakWords).filter(([, w]) => w.cleared).map(([k]) => k);
+    if (completed.length === 0) {
       updateStatus('정리할 연습 완료 단어가 없습니다.');
       return;
     }
-
-    completedKeys.forEach(k => delete appData.weakWords[k]);
+    completed.forEach(k => delete appData.weakWords[k]);
     if (selectedWeakKey && !appData.weakWords[selectedWeakKey]) {
-      const remaining = Object.keys(appData.weakWords);
-      selectedWeakKey = remaining.length > 0 ? remaining[0] : null;
+      const keys = Object.keys(appData.weakWords);
+      selectedWeakKey = keys.length > 0 ? keys[0] : null;
     }
     document.getElementById('weakFeedback').textContent = '';
     saveAll();
-    updateStatus(`🧹 연습 완료 단어 ${completedKeys.length}개를 정리했습니다.`);
+    updateStatus(`🧹 완료된 취약 단어 ${completed.length}개를 정리했습니다.`);
   }
 
   function renderWeakWords() {
@@ -798,7 +1271,7 @@
     chipsEl.innerHTML = '';
 
     if (list.length === 0) {
-      chipsEl.innerHTML = '<span style="font-size:13px; color:#6b7280;">문장 말하기에서 틀린 단어가 자동으로 이곳에 모입니다.</span>';
+      chipsEl.innerHTML = '<span style="font-size:14px; color:#64748b;">문장 말하기에서 틀린 단어가 자동으로 이곳에 모입니다.</span>';
       document.getElementById('selectedWeakWord').textContent = '취약 단어 없음';
       document.getElementById('selectedWeakStats').textContent = '';
       document.getElementById('selectedWeakMeaning').textContent = '';
@@ -832,53 +1305,82 @@
 
   function saveWeakMeaning() {
     if (!selectedWeakKey || !appData.weakWords[selectedWeakKey]) return;
-    const val = document.getElementById('weakMeaningInput').value.trim();
-    appData.weakWords[selectedWeakKey].meaning = val;
+    appData.weakWords[selectedWeakKey].meaning = document.getElementById('weakMeaningInput').value.trim();
     saveAll();
     document.getElementById('weakFeedback').textContent = '✅ 단어 해석이 저장되었습니다.';
   }
 
   function speakSelectedWeakWord() {
     if (!selectedWeakKey) return;
-    speakText(selectedWeakKey, 0.8);
+    speakText(selectedWeakKey, 0.8, false);
   }
 
-  function loadVoices() {
+  function populateVoicesByAccent() {
     if (!('speechSynthesis' in window)) return;
-    const voices = window.speechSynthesis.getVoices();
-    if (!voices.length) return;
-    const enVoices = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
-    availableVoices = enVoices.length > 0 ? enVoices : voices;
+    const allVoices = window.speechSynthesis.getVoices();
+    if (!allVoices.length) return;
+
+    const accent = appData.settings.accent || 'en-US';
+    let filtered = allVoices.filter(v => v.lang.toLowerCase() === accent.toLowerCase());
+    if (filtered.length === 0) {
+      filtered = allVoices.filter(v => v.lang.toLowerCase().startsWith('en'));
+    }
+    availableVoices = filtered.length > 0 ? filtered : allVoices;
 
     const selectEl = document.getElementById('voiceSelect');
-    const prev = selectEl.value;
     selectEl.innerHTML = '';
-    availableVoices.forEach((v, idx) => {
+
+    availableVoices.forEach(v => {
       const opt = document.createElement('option');
-      opt.value = idx;
+      opt.value = v.name;
       opt.textContent = `${v.name} (${v.lang})`;
       selectEl.appendChild(opt);
     });
-    if (prev && availableVoices[prev]) selectEl.value = prev;
+
+    if (appData.settings.voiceName && availableVoices.some(v => v.name === appData.settings.voiceName)) {
+      selectEl.value = appData.settings.voiceName;
+    } else if (availableVoices[0]) {
+      selectEl.value = availableVoices[0].name;
+      appData.settings.voiceName = availableVoices[0].name;
+    }
   }
 
   if ('speechSynthesis' in window) {
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
+    populateVoicesByAccent();
+    window.speechSynthesis.onvoiceschanged = populateVoicesByAccent;
   }
 
-  function speakText(text, customRate = null) {
+  function speakText(text, customRate = null, hideKoreanDuringRead = true) {
     if (!('speechSynthesis' in window) || !text) return;
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    const voiceIdx = parseInt(document.getElementById('voiceSelect').value, 10);
-    if (!isNaN(voiceIdx) && availableVoices[voiceIdx]) {
-      utter.voice = availableVoices[voiceIdx];
-      utter.lang = availableVoices[voiceIdx].lang;
-    } else {
-      utter.lang = 'en-US';
+
+    if (hideKoreanDuringRead) {
+      isReadingActive = true;
+      renderCurrentSentenceCard();
     }
-    utter.rate = customRate || parseFloat(document.getElementById('rateSelect').value) || 0.88;
+
+    const utter = new SpeechSynthesisUtterance(text);
+    const chosenName = document.getElementById('voiceSelect').value;
+    const matchedVoice = availableVoices.find(v => v.name === chosenName);
+    if (matchedVoice) {
+      utter.voice = matchedVoice;
+      utter.lang = matchedVoice.lang;
+    } else {
+      utter.lang = appData.settings.accent || 'en-US';
+    }
+    utter.rate = customRate || parseFloat(appData.settings.rate) || 0.88;
+
+    utter.onend = () => {
+      if (hideKoreanDuringRead) {
+        isReadingActive = false;
+        renderCurrentSentenceCard();
+      }
+    };
+    utter.onerror = () => {
+      isReadingActive = false;
+      renderCurrentSentenceCard();
+    };
+
     window.speechSynthesis.speak(utter);
   }
 
@@ -888,16 +1390,23 @@
   }
 
   function getActiveList() {
+    const level = appData.settings.level || 'beginner';
+    const hideMaster = !!appData.settings.hideMastered;
     return appData.items.filter(item => {
       const lv = item.level || detectLevel(item.en);
-      const matchLv = currentLevel === 'all' || lv === currentLevel;
-      const matchMaster = !hideMastered || (item.bestScore || 0) < 100;
+      const matchLv = level === 'all' || lv === level;
+      const matchMaster = !hideMaster || (item.bestScore || 0) < 100;
       return matchLv && matchMaster;
     });
   }
 
+  // 축약형 정규화 포함 단어 분리
+  function normalizeToken(word) {
+    return word.toLowerCase().replace(/[.,!?;:"()\-]/g, '').replace(/’/g, "'").trim();
+  }
+
   function normalizeWords(str) {
-    return str.toLowerCase().replace(/[.,!?;:'"()\-]/g, '').trim().split(/\s+/).filter(Boolean);
+    return str.split(/\s+/).map(normalizeToken).filter(Boolean);
   }
 
   function evaluateSpeech(targetEn, spokenEn) {
@@ -913,7 +1422,7 @@
     const missedWords = [];
 
     const htmlParts = rawTargetWords.map(origWord => {
-      const clean = origWord.toLowerCase().replace(/[.,!?;:'"()\-]/g, '');
+      const clean = normalizeToken(origWord);
       if (clean && spokenCounts[clean] > 0) {
         spokenCounts[clean]--;
         matched++;
@@ -928,6 +1437,84 @@
     return { percent, html: htmlParts.join(' '), missedWords };
   }
 
+  // 최근 음성인식 기록 저장 및 렌더링
+  function recordSpeechHistory(item, resultObj) {
+    appData.speechHistory.unshift({
+      id: 'hist_' + Date.now(),
+      itemId: item.id,
+      en: item.en,
+      spoken: resultObj.spoken,
+      percent: resultObj.percent,
+      html: resultObj.html,
+      timestamp: new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    });
+    if (appData.speechHistory.length > 30) {
+      appData.speechHistory = appData.speechHistory.slice(0, 30);
+    }
+  }
+
+  function renderSpeechHistory() {
+    const listEl = document.getElementById('historyList');
+    document.getElementById('historyCount').textContent = appData.speechHistory.length;
+
+    if (appData.speechHistory.length === 0) {
+      listEl.innerHTML = '<div style="padding:14px; text-align:center; color:#64748b; font-size:14px;">아직 음성인식 기록이 없습니다. 말하기 연습을 하면 이곳에 누적됩니다.</div>';
+      return;
+    }
+
+    listEl.innerHTML = '';
+    appData.speechHistory.forEach(entry => {
+      const div = document.createElement('div');
+      div.className = 'history-item';
+      const isPass = entry.percent >= PASS_THRESHOLD;
+      const badgeStyle = isPass
+        ? 'background:#d1fae5; color:#065f46;'
+        : 'background:#fee2e2; color:#991b1b;';
+
+      div.innerHTML = `
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:700; font-size:15px; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${entry.en}</div>
+          <div style="font-size:13px; color:#475569;">인식: "${entry.spoken}" · ${entry.timestamp}</div>
+        </div>
+        <span class="history-badge" style="${badgeStyle}">${entry.percent}%</span>
+      `;
+      div.onclick = () => restoreHistoryEntry(entry);
+      listEl.appendChild(div);
+    });
+  }
+
+  function restoreHistoryEntry(entry) {
+    clearTimeout(autoNextTimer);
+    const activeList = getActiveList();
+    let idx = activeList.findIndex(i => i.id === entry.itemId);
+
+    // 만약 완벽 마스터 숨김 때문에 활성 목록에 없으면 숨김을 해제하고 찾아감
+    if (idx === -1 && appData.settings.hideMastered) {
+      appData.settings.hideMastered = false;
+      applySettingsToUI();
+      const updatedList = getActiveList();
+      idx = updatedList.findIndex(i => i.id === entry.itemId);
+    }
+
+    if (idx !== -1) {
+      currentIndex = idx;
+      const targetItem = getActiveList()[currentIndex];
+      targetItem.lastResult = {
+        percent: entry.percent,
+        html: entry.html,
+        spoken: entry.spoken
+      };
+      renderAll();
+      updateStatus(`📜 [${entry.timestamp}] 음성인식 결과를 다시 불러왔습니다.`);
+    }
+  }
+
+  function clearSpeechHistory() {
+    appData.speechHistory = [];
+    saveAll();
+    updateStatus('🧹 최근 음성인식 기록을 비웠습니다.');
+  }
+
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition = null;
   let isListening = false;
@@ -940,10 +1527,13 @@
     recognition.onstart = () => {
       clearTimeout(autoNextTimer);
       isListening = true;
-      updateStatus(practiceMode === 'word' ? '🎙️ 선택된 단어를 발음해 주세요...' : '🎙️ 듣고 있습니다... 화면의 문장을 읽어주세요.', 'listening');
+      isReadingActive = practiceMode === 'sentence';
+      renderCurrentSentenceCard();
+      updateStatus(practiceMode === 'word' ? '🎙️ 선택된 단어를 발음해 주세요...' : '🎙️ 듣고 있습니다. 문장을 또박또박 읽어주세요...', 'listening');
     };
 
     recognition.onresult = (event) => {
+      isReadingActive = false;
       const spoken = event.results[0][0].transcript;
 
       if (practiceMode === 'word') {
@@ -961,32 +1551,24 @@
       if (!currentItem.bestScore || percent > currentItem.bestScore) {
         currentItem.bestScore = percent;
       }
+
+      // 문장 객체 자체에 마지막 음성인식 결과 저장 (되돌아가도 다시 볼 수 있음)
+      currentItem.lastResult = { percent, html, spoken };
+      recordSpeechHistory(currentItem, currentItem.lastResult);
+
       missedWords.forEach(w => addWeakWord(w));
       recordDailyStat(percent);
       saveAll(false);
 
-      const panel = document.getElementById('resultPanel');
-      panel.style.display = 'block';
-      document.getElementById('wordCompare').innerHTML = html;
-      document.getElementById('spokenRaw').textContent = `인식된 음성: "${spoken}"`;
-
-      const scoreText = document.getElementById('scoreText');
-      const passBadge = document.getElementById('passBadge');
-
       if (percent >= PASS_THRESHOLD) {
-        scoreText.textContent = `정확도: ${percent}%`;
-        scoreText.className = 'score-pass';
-        passBadge.textContent = percent === 100 ? '🏆 100% 완벽 마스터!' : '🎉 통과! 잠시 후 다음 문장으로 이동합니다.';
-        passBadge.className = 'score-pass';
-        updateStatus(`✅ 정확도 ${percent}%! 곧 다음 문장으로 넘어갑니다.`, 'normal');
-
-        autoNextTimer = setTimeout(() => nextSentence(), 1800);
+        if (appData.settings.autoNext) {
+          updateStatus(`✅ 정확도 ${percent}%! 2초 후 다음 문장으로 이동합니다.`, 'normal');
+          autoNextTimer = setTimeout(() => nextSentence(), 2000);
+        } else {
+          updateStatus(`✅ 정확도 ${percent}% 통과! 결과를 확인하신 뒤 [다음 문장]을 누르세요.`, 'normal');
+        }
       } else {
-        scoreText.textContent = `정확도: ${percent}% (통과 기준: ${PASS_THRESHOLD}%)`;
-        scoreText.className = 'score-fail';
-        passBadge.textContent = '🔍 빨간색 밑줄 단어는 취약 단어 목록에도 추가되었습니다.';
-        passBadge.className = 'score-fail';
-        updateStatus(`❗ 정확도 ${percent}%입니다. 틀린 단어를 확인하고 다시 도전해 보세요!`, 'retry');
+        updateStatus(`❗ 정확도 ${percent}%입니다. 빨간색 밑줄 단어를 확인하고 다시 연습해 보세요!`, 'retry');
       }
 
       renderAll();
@@ -994,11 +1576,15 @@
 
     recognition.onerror = (e) => {
       isListening = false;
-      updateStatus(`⚠️ 음성이 인식되지 않았습니다 (${e.error}). 다시 시도해 주세요.`, 'retry');
+      isReadingActive = false;
+      renderCurrentSentenceCard();
+      updateStatus(`⚠️ 음성이 인식되지 않았습니다 (${e.error}). 마이크 권한을 확인하고 다시 시도해 주세요.`, 'retry');
     };
 
     recognition.onend = () => {
       isListening = false;
+      isReadingActive = false;
+      renderCurrentSentenceCard();
     };
   }
 
@@ -1009,8 +1595,7 @@
     const isMatch = cleanSpoken.includes(target.word) || target.word.includes(cleanSpoken);
 
     target.practiceCount += 1;
-    const score = isMatch ? 100 : 0;
-    recordDailyStat(score);
+    recordDailyStat(isMatch ? 100 : 0);
 
     const fb = document.getElementById('weakFeedback');
     if (isMatch && cleanSpoken.length > 0) {
@@ -1035,6 +1620,7 @@
     }
     if (isListening) return;
     practiceMode = mode;
+    recognition.lang = appData.settings.accent || 'en-US';
     recognition.start();
   }
 
@@ -1049,49 +1635,90 @@
     if (shouldRender) renderAll();
   }
 
-  function toggleHideMaster() {
-    clearTimeout(autoNextTimer);
-    hideMastered = !hideMastered;
-    currentIndex = 0;
-    document.getElementById('resultPanel').style.display = 'none';
-    document.getElementById('hideMasterBtn').textContent = hideMastered ? '🙈 완벽(100%) 문장 숨김 중' : '👀 완벽(100%) 문장 표시 중';
-    renderAll();
+  function renderResultPanel(res) {
+    const panel = document.getElementById('resultPanel');
+    if (!res) {
+      panel.style.display = 'none';
+      return;
+    }
+
+    panel.style.display = 'block';
+    document.getElementById('wordCompare').innerHTML = res.html;
+    document.getElementById('spokenRaw').textContent = `인식된 내 발음: "${res.spoken}"`;
+
+    const scoreText = document.getElementById('scoreText');
+    const passBadge = document.getElementById('passBadge');
+
+    if (res.percent >= PASS_THRESHOLD) {
+      scoreText.textContent = `정확도: ${res.percent}%`;
+      scoreText.className = 'score-pass';
+      passBadge.textContent = res.percent === 100 ? '🏆 100% 완벽 마스터!' : '🎉 통과 (결과 보존됨)';
+      passBadge.className = 'score-pass';
+    } else {
+      scoreText.textContent = `정확도: ${res.percent}% (기준: ${PASS_THRESHOLD}%)`;
+      scoreText.className = 'score-fail';
+      passBadge.textContent = '🔍 빨간색 밑줄 단어는 취약 단어에 추가됨';
+      passBadge.className = 'score-fail';
+    }
   }
 
-  function changeLevel() {
-    clearTimeout(autoNextTimer);
-    currentLevel = document.getElementById('levelSelect').value;
-    currentIndex = 0;
-    document.getElementById('resultPanel').style.display = 'none';
-    renderAll();
-  }
-
-  function renderAll() {
-    document.getElementById('totalCount').textContent = appData.items.length;
+  function renderCurrentSentenceCard() {
     const activeList = getActiveList();
+    const grammarEl = document.getElementById('grammarBox');
 
     if (activeList.length === 0) {
       document.getElementById('counterBadge').textContent = '0 / 0';
       document.getElementById('levelBadge').textContent = '완료';
       document.getElementById('masterBadge').style.display = 'none';
-      document.getElementById('englishText').textContent = hideMastered
+      document.getElementById('englishText').textContent = appData.settings.hideMastered
         ? '현재 조건의 문장을 모두 100% 마스터했습니다! 상단에서 [완벽 문장 표시 중]을 누르거나 새 문장을 추가하세요.'
         : '표시할 문장이 없습니다. 새 문장을 추가하세요.';
       document.getElementById('koreanText').textContent = '';
-    } else {
-      if (currentIndex >= activeList.length) currentIndex = 0;
-      const cur = activeList[currentIndex];
-      const lv = (cur.level || detectLevel(cur.en)) === 'beginner' ? '🌱 초급' : '🌿 중급';
-      document.getElementById('levelBadge').textContent = `${lv} · 최고 ${cur.bestScore || 0}%`;
-      document.getElementById('masterBadge').style.display = (cur.bestScore || 0) >= 100 ? 'inline-block' : 'none';
-      document.getElementById('counterBadge').textContent = `${currentIndex + 1} / ${activeList.length} (연습 ${cur.count || 0}회)`;
-      document.getElementById('englishText').textContent = cur.en;
-      document.getElementById('koreanText').textContent = cur.ko || '';
+      grammarEl.style.display = 'none';
+      renderResultPanel(null);
+      return;
     }
 
+    if (currentIndex >= activeList.length) currentIndex = 0;
+    const cur = activeList[currentIndex];
+    const lv = (cur.level || detectLevel(cur.en)) === 'beginner' ? '🌱 초급' : '🌿 중급';
+    const koResolved = resolveTranslation(cur.en, cur.ko);
+
+    document.getElementById('levelBadge').textContent = `${lv} · 최고 ${cur.bestScore || 0}%`;
+    document.getElementById('masterBadge').style.display = (cur.bestScore || 0) >= 100 ? 'inline-block' : 'none';
+    document.getElementById('counterBadge').textContent = `${currentIndex + 1} / ${activeList.length} (연습 ${cur.count || 0}회)`;
+    document.getElementById('englishText').textContent = cur.en;
+
+    const koEl = document.getElementById('koreanText');
+    if (isReadingActive) {
+      koEl.className = 'reading-hidden-note';
+      koEl.textContent = '듣기/읽기 중에는 한국어가 잠시 숨겨집니다.';
+    } else if (!appData.settings.showMeaning) {
+      koEl.className = 'reading-hidden-note';
+      koEl.textContent = '한글 뜻이 숨김 상태입니다. [한글 뜻 보기]로 확인할 수 있습니다.';
+    } else {
+      koEl.className = 'korean-text';
+      koEl.textContent = `뜻: ${koResolved}`;
+    }
+
+    if (showGrammarBox) {
+      grammarEl.style.display = 'block';
+      grammarEl.innerHTML = buildGrammarHTML(cur.en);
+    } else {
+      grammarEl.style.display = 'none';
+    }
+
+    // 현재 문장의 마지막 음성인식 결과가 있으면 항상 표시 (지나가도 다시 볼 수 있음)
+    renderResultPanel(cur.lastResult || null);
+  }
+
+  function renderAll() {
+    document.getElementById('totalCount').textContent = appData.items.length;
+    renderCurrentSentenceCard();
     renderList();
     renderWeakWords();
     renderStats();
+    renderSpeechHistory();
   }
 
   function renderList() {
@@ -1101,12 +1728,15 @@
 
     const activeList = getActiveList();
     const currentItem = activeList[currentIndex];
+    const level = appData.settings.level || 'beginner';
+    const hideMaster = !!appData.settings.hideMastered;
 
     const filtered = appData.items.filter(item => {
-      const matchKeyword = item.en.toLowerCase().includes(keyword) || (item.ko && item.ko.includes(keyword));
+      const koText = resolveTranslation(item.en, item.ko);
+      const matchKeyword = item.en.toLowerCase().includes(keyword) || koText.toLowerCase().includes(keyword);
       const lv = item.level || detectLevel(item.en);
-      const matchLevel = currentLevel === 'all' || lv === currentLevel;
-      const matchMaster = !hideMastered || (item.bestScore || 0) < 100;
+      const matchLevel = level === 'all' || lv === level;
+      const matchMaster = !hideMaster || (item.bestScore || 0) < 100;
       return matchKeyword && matchLevel && matchMaster;
     });
 
@@ -1121,16 +1751,18 @@
       div.className = 'list-item' + (isCurrent ? ' active' : '');
       div.onclick = () => {
         clearTimeout(autoNextTimer);
+        isReadingActive = false;
         const idx = activeList.findIndex(a => a.id === item.id);
         if (idx !== -1) currentIndex = idx;
-        document.getElementById('resultPanel').style.display = 'none';
         renderAll();
       };
       const lvLabel = (item.level || detectLevel(item.en)) === 'beginner' ? '초급' : '중급';
+      const koText = resolveTranslation(item.en, item.ko);
+      const hasHistoryMark = item.lastResult ? ` · 최근 ${item.lastResult.percent}%` : '';
       div.innerHTML = `
         <div class="item-main">
           <div class="item-en">${item.en}</div>
-          <div class="item-meta">[${lvLabel}] ${item.ko ? item.ko + ' · ' : ''}최고 ${item.bestScore || 0}% · 연습 ${item.count || 0}회</div>
+          <div class="item-meta">[${lvLabel}] ${koText} · 최고 ${item.bestScore || 0}%${hasHistoryMark}</div>
         </div>
         <div class="item-actions">
           <button class="edit-btn" onclick="startEdit(event, '${item.id}')">수정</button>
@@ -1161,10 +1793,10 @@
     const target = appData.items.find(i => i.id === editingId);
     if (target) {
       target.en = newEn;
-      target.ko = newKo;
+      target.ko = resolveTranslation(newEn, newKo);
       target.level = newLevel;
       saveAll();
-      updateStatus('✏️ 문장과 레벨이 수정되었습니다.');
+      updateStatus('✏️ 문장, 번역 및 레벨이 수정되었습니다.');
     }
     cancelEdit();
   }
@@ -1180,29 +1812,38 @@
     saveAll();
   }
 
-  function appendItems(newEntries) {
+  async function appendItemsAsync(newEntries) {
     let added = 0;
-    newEntries.forEach(entry => {
+    for (const entry of newEntries) {
       const cleanEn = entry.en.trim();
-      if (cleanEn.length > 2 && !appData.items.some(i => i.en.toLowerCase() === cleanEn.toLowerCase())) {
+      const exists = appData.items.some(i => i.en.toLowerCase() === cleanEn.toLowerCase());
+      if (cleanEn.length > 2 && !exists) {
+        let finalKo = (entry.ko || '').trim();
+        if (!finalKo) {
+          finalKo = await fetchOnlineTranslation(cleanEn);
+        }
         appData.items.push({
-          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          id: 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
           en: cleanEn,
-          ko: (entry.ko || '').trim(),
+          ko: finalKo,
           level: entry.level || detectLevel(cleanEn),
           count: 0,
-          bestScore: 0
+          bestScore: 0,
+          lastResult: null
         });
         added++;
       }
-    });
+    }
     saveAll();
-    updateStatus(`📥 새 문장 ${added}개가 누적 저장되었습니다.`);
+    updateStatus(added > 0
+      ? `📥 새 문장 ${added}개가 자동 번역과 함께 저장되었습니다.`
+      : 'ℹ️ 이미 저장된 문장입니다 (중복 제외).');
   }
 
-  function addCustomMaterials() {
+  async function addCustomMaterials() {
     const raw = document.getElementById('customInput').value;
     if (!raw.trim()) return;
+    updateStatus('🌐 문장을 추가하고 자동 번역을 처리하는 중입니다...');
     const lines = raw.split(/\n+/).map(l => l.trim()).filter(Boolean);
     const parsed = [];
     lines.forEach(line => {
@@ -1214,47 +1855,59 @@
         sents.forEach(s => parsed.push({ en: s, ko: '' }));
       }
     });
-    appendItems(parsed);
+    await appendItemsAsync(parsed);
     document.getElementById('customInput').value = '';
   }
 
-  function addBeginnerPack() {
-    appendItems(BEGINNER_STARTER);
+  async function addBeginnerPack() {
+    await appendItemsAsync(BEGINNER_STARTER);
   }
 
   async function fetchInternetQuotes() {
-    updateStatus('🌐 인터넷에서 영어 예문을 가져오는 중입니다...');
+    updateStatus('🌐 인터넷에서 영어 명언 5개를 가져와 번역하는 중입니다...');
     try {
-      const res = await fetch('https://dummyjson.com/quotes?limit=5');
+      const res = await fetch('https://dummyjson.com/quotes?limit=5&skip=' + Math.floor(Math.random() * 50));
       const data = await res.json();
-      appendItems(data.quotes.map(q => ({ en: q.quote, ko: '' })));
+      const entries = (data.quotes || []).map(q => ({ en: q.quote, ko: '' }));
+      if (entries.length > 0) {
+        await appendItemsAsync(entries);
+        return;
+      }
+      throw new Error('empty');
     } catch {
-      updateStatus('⚠️ 인터넷 연결을 확인해 주세요.', 'retry');
+      const fallbackQuotes = [
+        { en: "Small daily improvements lead to lasting results.", ko: "작은 일상의 개선이 오래가는 결과를 만듭니다." },
+        { en: "Consistency is more important than speed.", ko: "꾸준함이 속도보다 더 중요합니다." },
+        { en: "Every mistake is a step toward better speaking.", ko: "모든 실수는 더 나은 말하기를 향한 한 걸음입니다." },
+        { en: "Clear speech comes from patient practice.", ko: "명확한 말하기는 인내심 있는 연습에서 나옵니다." },
+        { en: "A calm mind helps you learn faster.", ko: "차분한 마음은 더 빠르게 배우도록 돕습니다." }
+      ];
+      await appendItemsAsync(fallbackQuotes);
     }
   }
 
   function speakSentence() {
     const activeList = getActiveList();
     if (!activeList[currentIndex]) return;
-    speakText(activeList[currentIndex].en);
+    speakText(activeList[currentIndex].en, null, true);
   }
 
   function prevSentence() {
     clearTimeout(autoNextTimer);
+    isReadingActive = false;
     const activeList = getActiveList();
     if (activeList.length === 0) return;
     currentIndex = (currentIndex - 1 + activeList.length) % activeList.length;
-    document.getElementById('resultPanel').style.display = 'none';
-    updateStatus('⏮ 이전 문장으로 되돌아갔습니다.');
+    updateStatus('⏮ 이전 문장으로 되돌아갔습니다. 직전 연습 결과가 있으면 함께 표시됩니다.');
     renderAll();
   }
 
   function nextSentence() {
     clearTimeout(autoNextTimer);
+    isReadingActive = false;
     const activeList = getActiveList();
     if (activeList.length === 0) return;
     currentIndex = (currentIndex + 1) % activeList.length;
-    document.getElementById('resultPanel').style.display = 'none';
     updateStatus('다음 문장입니다. 듣고 따라 읽어보세요.');
     renderAll();
   }
@@ -1273,15 +1926,15 @@
   }
 
   function exportBackup() {
-    const payload = { version: 4, exportedAt: new Date().toISOString(), data: appData };
+    const payload = { version: 6, exportedAt: new Date().toISOString(), data: appData };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `english_app_backup_${getTodayKey()}.json`;
+    a.download = `english_app_backup_${getTodayKey(0)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    updateStatus('💾 문장, 취약 단어, 통계가 포함된 백업 파일이 저장되었습니다.');
+    updateStatus('💾 문장, 음성인식 기록, 취약 단어, 통계가 포함된 백업 파일이 저장되었습니다.');
   }
 
   function importBackup(event) {
@@ -1300,10 +1953,11 @@
             appData.items.push({
               id: entry.id || ('imp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)),
               en: entry.en,
-              ko: entry.ko || '',
+              ko: resolveTranslation(entry.en, entry.ko),
               level: entry.level || detectLevel(entry.en),
               count: entry.count || 0,
-              bestScore: entry.bestScore || 0
+              bestScore: entry.bestScore || 0,
+              lastResult: entry.lastResult || null
             });
             merged++;
           }
@@ -1320,6 +1974,16 @@
           Object.entries(src.dailyStats).forEach(([d, st]) => {
             if (!appData.dailyStats[d]) appData.dailyStats[d] = st;
           });
+        }
+
+        if (Array.isArray(src.speechHistory)) {
+          appData.speechHistory = [...src.speechHistory, ...appData.speechHistory].slice(0, 30);
+        }
+
+        if (src.settings) {
+          appData.settings = { ...appData.settings, ...src.settings };
+          applySettingsToUI();
+          populateVoicesByAccent();
         }
 
         saveAll();
@@ -1340,6 +2004,7 @@
     if (e.code === 'ArrowRight') { e.preventDefault(); nextSentence(); }
   });
 
+  applySettingsToUI();
   renderAll();
 </script>
 </body>
